@@ -10,9 +10,8 @@ and are short versions of pycon videos
 
 from __future__ import unicode_literals
 import os.path
-from pytube import YouTube
-from subprocess import Popen, PIPE
 import youtube_dl
+
 def get_names(d):
     """
     get the names of the videos already in my directory and the size of the vids
@@ -45,7 +44,7 @@ def download(link, files, avg):
     '''gets the playlist and Downloads the videos that i dont have'''
 
     url = 'https://www.youtube.com/watch?v=MCs5OvhV9S4'
-    ydl_opts = {'listformats'}
+    ydl_opts = {'simulate':'yes'}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
