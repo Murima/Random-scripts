@@ -8,11 +8,11 @@ and are short versions of pycon videos
 
 """
 
+from __future__ import unicode_literals
 import os.path
 from pytube import YouTube
 from subprocess import Popen, PIPE
-
-
+import youtube_dl
 def get_names(d):
     """
     get the names of the videos already in my directory and the size of the vids
@@ -20,7 +20,7 @@ def get_names(d):
     file_attributes = []
     for name in os.listdir(d):
         if os.path.isfile(os.path.join(d,name)):
-            file_attributes.append(name, os.path.getsize(d+name))
+            file_attributes.append((name, os.path.getsize(d+name)))
 
     return file_attributes
 
@@ -45,16 +45,10 @@ def download(link, files, avg):
     '''gets the playlist and Downloads the videos that i dont have'''
 
     url = 'https://www.youtube.com/watch?v=MCs5OvhV9S4'
-    command = 'youtube-dl --flat-playlist '+url
-    playlist = Popen(command , stdout=PIPE, stderr=PIPE, shell=True)
-    print(playlist.stdout)
-    yt = YouTube()
+    ydl_opts = {'listformats'}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
-
-    for v in playlist:
-        vid = yt.download()
-        if playlist.stdout not in files:
-                save_vids(avg, vid)
 
 
 def save_vids(avg, vid):
