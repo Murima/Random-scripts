@@ -17,9 +17,30 @@ def get_names(d):
     """
     get the names of the videos already in my directory and the size of the vids
     """
-    names = [name for name in os.listdir(d) if os.path.isfile(os.path.join(d, name))]
+    file_attributes = []
+    for name in os.listdir(d):
+        if os.path.isfile(os.path.join(d,name)):
+            file_attributes.append(name, os.path.getsize(d+name))
 
-    return names
+    return file_attributes
+
+
+def get_average_size(d, names):
+    """
+    get the average size of the files that are considered
+    short
+    """
+    size = 0
+    name=0
+    length = len(names)
+
+    for name, size in names:
+        size+=size
+
+    return (size/1000000)/length
+
+
+
 def download(link, files, avg):
     '''gets the playlist and Downloads the videos that i dont have'''
 
@@ -46,18 +67,6 @@ def save_vids(avg, vid):
         return
 
         return
-def get_average_size(d, names):
-    """
-    get the average size of the files that are considered
-    short
-    """
-    size = []
-    length = len(names)
-
-    for results in  os.path.getsize(os.path.join(d, names)):
-        size.append(results)
-        avg = sum(size)/length
-
 
 
 
