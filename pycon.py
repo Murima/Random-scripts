@@ -37,6 +37,9 @@ def download(link, files, avg):
 
 
 def save_vids(avg, vid):
+    """
+    save the videos to the right directory
+    """
     if vid < avg:
         os.system('mv ')
 
