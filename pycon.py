@@ -10,7 +10,7 @@ and are short versions of pycon videos
 
 from __future__ import unicode_literals
 import os.path
-import youtube_dl
+from youtube_dl import YoutubeDL
 
 def get_names(d):
     """
@@ -43,10 +43,16 @@ def get_average_size(d, names):
 def download(link, files, avg):
     '''gets the playlist and Downloads the videos that i dont have'''
 
-    url = 'https://www.youtube.com/watch?v=MCs5OvhV9S4'
-    ydl_opts = {'simulate':'yes'}
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    #url = 'https://www.youtube.com/watch?v=MCs5OvhV9S4'
+    url = 'https://www.youtube.com/playlist?list=PLwyG5wA5gIzjhW36BxGBoQwUZHnPDFux3'
+    ydl=YoutubeDL()
+    ydl.add_default_info_extractors()
+    playlist = ydl.extract_info(url, download=False)
+    count = 0
+    for videos in playlist['entries']:
+        count+=1
+        if count == 5:
+            print ("video Title:{}".format( videos['title']))
 
 
 
