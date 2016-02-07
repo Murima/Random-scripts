@@ -40,7 +40,7 @@ def get_average_size(d, names):
 
 
 
-def download(link, files, avg):
+def download(link, files_present, avg):
     '''gets the playlist and Downloads the videos that i dont have'''
 
     #url = 'https://www.youtube.com/watch?v=MCs5OvhV9S4'
@@ -48,21 +48,18 @@ def download(link, files, avg):
     ydl=YoutubeDL()
     ydl.add_default_info_extractors()
     playlist = ydl.extract_info(url, download=False)
-    for videos in playlist['entries']:
-        print ("Video # {} Title:{}".format( videos['playlist_index'], videos['title']))
+    for video in playlist['entries']:
+        if video['title'] in files_present:
+            print ("Video #{} {} is present and will be ignored").format(video['playlist_index'], video['title'])
+        else:
+            ydl.download(video['url'])
 
 
-
-def save_vids(avg, vid):
+def save_vids():
     """
     save the videos to the right directory
     """
-    if vid < avg:
-        os.system('mv ')
-
-        return
-
-        return
+    return
 
 
 
@@ -72,5 +69,5 @@ if __name__ =='__main__':
     d = '/home/killer/games/Gilu/pycon/PyCon/Short/'
     files = get_names(d)
     average = get_average_size(d, files)
-    vids = download(link, files, average)
-    save_vids(average, vids)
+    download(link, files, average)
+    save_vids()
