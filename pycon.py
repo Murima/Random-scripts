@@ -49,10 +49,12 @@ def download(link, files_present, avg):
     ydl.add_default_info_extractors()
     playlist = ydl.extract_info(url, download=False)
     for video in playlist['entries']:
+        import ipdb; ipdb.set_trace()
         if video['title'] in files_present:
             print ("Video #{} {} is present and will be ignored").format(video['playlist_index'], video['title'])
         else:
-            ydl.download(video['url'])
+            print   ("currently downloading: {}").format(video['title'])
+            ydl.download(video['webpage_url'])
 
 
 def save_vids():
