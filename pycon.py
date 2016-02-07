@@ -48,11 +48,8 @@ def download(link, files, avg):
     ydl=YoutubeDL()
     ydl.add_default_info_extractors()
     playlist = ydl.extract_info(url, download=False)
-    count = 0
     for videos in playlist['entries']:
-        count+=1
-        if count == 5:
-            print ("video Title:{}".format( videos['title']))
+        print ("Video # {} Title:{}".format( videos['playlist_index'], videos['title']))
 
 
 
